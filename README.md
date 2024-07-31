@@ -1,4 +1,4 @@
-I choose ReactJs as a FrontEnd, Node.js or PHP as a Backend, annd MongoDb as a  database.
+I choose Asp.NET as a FrontEnd, .Net as a Backend, annd MongoDb as a  database.
 
 I created 4 tables in databse, Which are product,checkout,cart and user.
 
