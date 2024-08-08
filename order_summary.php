@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <title>Order Summary</title>
-        <link rel='stylesheet' href='/styles.css'>
+        <link rel='stylesheet' href='css/styles.css'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'>
     </head>
     <body>
         <h1>Order Summary</h1>
@@ -62,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo "</ul>
         <p>Total Price: \$$totalPrice</p>
-        <a href='index.php' class='btn'>Back to Products</a>
+        <a href='index.php' class='btn'><i class='fas fa-arrow-left icon'></i>Back to Products</a>
     </body>
     </html>
     ";

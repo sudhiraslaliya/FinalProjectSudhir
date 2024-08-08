@@ -34,29 +34,33 @@ if (!$productsResult) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Store</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
     <h1>Online Store</h1>
     <h2>Categories</h2>
-    <ul>
+    <ul class="categories">
         <?php while ($category = $categoriesResult->fetch_assoc()): ?>
         <li><?php echo $category['name']; ?></li>
         <?php endwhile; ?>
     </ul>
 
     <h2>Products</h2>
-    <ul>
+    <div class="product-grid">
         <?php while ($product = $productsResult->fetch_assoc()): ?>
-        <li>
-            <a href="product_details.php?id=<?php echo $product['id']; ?>"><?php echo $product['name']; ?></a>
-            - $<?php echo $product['price']; ?>
-        </li>
+        <div class="product-card">
+            <h3><?php echo $product['name']; ?></h3>
+            <p>$<?php echo $product['price']; ?></p>
+            <p><?php echo $product['description']; ?></p>
+            <a href="product_details.php?id=<?php echo $product['id']; ?>" class="btn"><i
+                    class="fas fa-info-circle icon"></i>View Details</a>
+        </div>
         <?php endwhile; ?>
-    </ul>
+    </div>
 
-    <a href="cart.php">View Cart</a>
+    <a href="cart.php" class="btn"><i class="fas fa-shopping-cart icon"></i>View Cart</a>
 </body>
 
 </html>

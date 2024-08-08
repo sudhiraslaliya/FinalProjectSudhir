@@ -58,7 +58,8 @@ if (!empty($productIds)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -73,16 +74,17 @@ if (!empty($productIds)) {
             <form action="cart.php" method="POST" style="display:inline;">
                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                 <input type="number" name="quantity" value="<?php echo $_SESSION['cart'][$product['id']]; ?>">
-                <button type="submit" name="update_quantity">Update</button>
-                <button type="submit" name="remove_from_cart">Remove</button>
+                <button type="submit" name="update_quantity" class="btn"><i class="fas fa-sync icon"></i>Update</button>
+                <button type="submit" name="remove_from_cart" class="btn"><i
+                        class="fas fa-trash icon"></i>Remove</button>
             </form>
         </li>
         <?php endforeach; ?>
     </ul>
-    <a href="checkout.php">Proceed to Checkout</a>
+    <a href="checkout.php" class="btn"><i class="fas fa-credit-card icon"></i>Proceed to Checkout</a>
     <?php endif; ?>
 
-    <a href="index.php">Back to Products</a>
+    <a href="index.php" class="btn"><i class="fas fa-arrow-left icon"></i>Back to Products</a>
 </body>
 
 </html>

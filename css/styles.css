@@ -29,7 +29,7 @@ ul {
 .categories li {
     margin: 5px 10px;
     padding: 10px;
-    background: #007bff;
+    background: #947be7;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -74,7 +74,7 @@ ul {
     display: inline-block;
     margin: 10px 0;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #947be7;
     color: white;
     border-radius: 5px;
     text-decoration: none;
@@ -83,7 +83,7 @@ ul {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #000000;
 }
 
 /* Input boxes */
@@ -102,5 +102,5 @@ input[type="number"] {
 /* Icons */
 .icon {
     margin-right: 8px;
-    color: #007bff;
+    color: #ffffff;
 }
