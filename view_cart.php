@@ -2,103 +2,63 @@
 session_start();
 include 'db_connect.php';
 
-if (isset($_POST['remove'])) {
-    $product_id = $_POST['product_id'];
-    unset($_SESSION['cart'][$product_id]);
-}
+$cart_products = [];
+if (!empty($_SESSION['cart'])) {
+    $ids = implode(',', $_SESSION['cart']);
+    $sql = "SELECT * FROM products WHERE id IN ($ids)";
+    $result = $conn->query($sql);
 
-if (isset($_POST['update'])) {
-    $product_id = $_POST['product_id'];
-    $quantity = $_POST['quantity'];
-    $_SESSION['cart'][$product_id] = $quantity;
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $cart_products[] = $row;
+        }
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <link href="css/app.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="main">
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="mb-3">
-                        <h1 class="h3 d-inline align-middle">Shopping Cart</h1>
-                    </div>
-                    <div class="row">
-                        <?php
-                        if (empty($_SESSION['cart'])) {
-                            echo "<p>Your cart is empty.</p>";
-                        } else {
-                            echo "<table class='table'>";
-                            echo "<thead>";
-                            echo "<tr>";
-                            echo "<th>Product</th>";
-                            echo "<th>Quantity</th>";
-                            echo "<th>Price</th>";
-                            echo "<th>Total</th>";
-                            echo "<th>Actions</th>";
-                            echo "</tr>";
-                            echo "</thead>";
-                            echo "<tbody>";
-
-                            $total_amount = 0;
-
-                            foreach ($_SESSION['cart'] as $product_id => $quantity) {
-                                $sql = "SELECT * FROM products WHERE product_id='$product_id'";
-                                $result = $conn->query($sql);
-                                $row = $result->fetch_assoc();
-
-                                $name = $row['name'];
-                                $price = $row['price'];
-                                $total = $price * $quantity;
-                                $total_amount += $total;
-
-                                echo "<tr>";
-                                echo "<td>$name</td>";
-                                echo "<td>";
-                                echo "<form method='post' action='view_cart.php'>";
-                                echo "<input type='hidden' name='product_id' value='$product_id'>";
-                                echo "<input type='number' name='quantity' value='$quantity'>";
-                                echo "<button type='submit' name='update' class='btn btn-primary btn-sm'>Update</button>";
-                                echo "</form>";
-                                echo "</td>";
-                                echo "<td>$$price</td>";
-                                echo "<td>$$total</td>";
-                                echo "<td>";
-                                echo "<form method='post' action='view_cart.php'>";
-                                echo "<input type='hidden' name='product_id' value='$product_id'>";
-                                echo "<button type='submit' name='remove' class='btn btn-danger btn-sm'>Remove</button>";
-                                echo "</form>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-
-                            echo "<tr>";
-                            echo "<td colspan='3'>Total</td>";
-                            echo "<td>$$total_amount</td>";
-                            echo "<td></td>";
-                            echo "</tr>";
-
-                            echo "</tbody>";
-                            echo "</table>";
-                            echo "<a href='checkout.php' class='btn btn-primary'>Checkout</a>";
-                        }
-                        ?>
-                    </div>
-                </div>
-            </main>
+    <header>
+        <h1>Your Cart</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="categories.php">Categories</a></li>
+                <li><a href="view_cart.php">Cart</a></li>
+                <li><a href="checkout.php">Checkout</a></li>
+                <li><a href="admin.php">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="cart">
+            <?php
+            if (!empty($cart_products)) {
+                foreach ($cart_products as $product) {
+                    echo "<div class='product'>
+                            <h3>{$product['name']}</h3>
+                            <p>\${$product['price']}</p>
+                            <form action='remove_from_cart.php' method='post'>
+                                <input type='hidden' name='product_id' value='{$product['id']}'>
+                                <button type='submit' name='remove_from_cart'>Remove</button>
+                            </form>
+                          </div>";
+                }
+            } else {
+                echo "<p>Your cart is empty</p>";
+            }
+            ?>
         </div>
-    </div>
-    <script src="js/app.js"></script>
+    </main>
 </body>
 
 </html>

@@ -1,18 +1,16 @@
 <?php
 session_start();
-$product_id = $_POST['product_id'];
-$quantity = $_POST['quantity'];
 
 if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = array();
+    $_SESSION['cart'] = [];
 }
 
-if (isset($_SESSION['cart'][$product_id])) {
-    $_SESSION['cart'][$product_id] += $quantity;
-} else {
-    $_SESSION['cart'][$product_id] = $quantity;
+if (isset($_POST['add_to_cart'])) {
+    $product_id = $_POST['product_id'];
+    if (!in_array($product_id, $_SESSION['cart'])) {
+        $_SESSION['cart'][] = $product_id;
+    }
 }
 
-header("Location: view_cart.php");
-exit();
+header('Location: view_cart.php');
 ?>

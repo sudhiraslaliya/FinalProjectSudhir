@@ -1,56 +1,54 @@
-<?php
-include 'db_connect.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Product Listings</title>
-    <link href="css/app.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Furniture Store</title>
+    <link rel="stylesheet" href="app.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="main">
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="mb-3">
-                        <h1 class="h3 d-inline align-middle">Product Listings</h1>
-                    </div>
-                    <div class="row">
-                        <?php
-                        $sql = "SELECT * FROM products";
-                        $result = $conn->query($sql);
+    <header>
+        <h1>Welcome to Your Furniture Store</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="categories.php">Categories</a></li>
+                <li><a href="view_cart.php">Cart</a></li>
+                <li><a href="checkout.php">Checkout</a></li>
+                <li><a href="admin.php">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Our Products</h2>
+        <div id="products">
+            <?php
+            include 'db_connect.php';
+            $sql = "SELECT * FROM products";
+            $result = $conn->query($sql);
 
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                echo "<div class='col-md-4'>";
-                                echo "<div class='card'>";
-                                echo "<div class='card-body'>";
-                                echo "<h5 class='card-title'>" . $row["name"] . "</h5>";
-                                echo "<p class='card-text'>" . $row["description"] . "</p>";
-                                echo "<p class='card-text'>Price: $" . $row["price"] . "</p>";
-                                echo "<p class='card-text'>Stock: " . $row["stock_quantity"] . "</p>";
-                                echo "<a href='product_details.php?id=" . $row["product_id"] . "' class='btn btn-primary'>View Details</a>";
-                                echo "</div>";
-                                echo "</div>";
-                                echo "</div>";
-                            }
-                        } else {
-                            echo "No products found.";
-                        }
-
-                        $conn->close();
-                        ?>
-                    </div>
-                </div>
-            </main>
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<div class='product'>
+                            <img src='path/to/image.jpg' alt='{$row['name']}'>
+                            <h3>{$row['name']}</h3>
+                            <p>{$row['description']}</p>
+                            <p>\${$row['price']}</p>
+                            <form action='add_to_cart.php' method='post'>
+                                <input type='hidden' name='product_id' value='{$row['id']}'>
+                                <button type='submit' name='add_to_cart'>Add to Cart</button>
+                            </form>
+                          </div>";
+                }
+            } else {
+                echo "<p>No products available</p>";
+            }
+            $conn->close();
+            ?>
         </div>
-    </div>
-    <script src="js/app.js"></script>
+    </main>
 </body>
 
 </html>
