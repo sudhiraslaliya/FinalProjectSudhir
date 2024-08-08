@@ -85,6 +85,9 @@ if (!empty($productIds)) {
     <?php endif; ?>
 
     <a href="index.php" class="btn"><i class="fas fa-arrow-left icon"></i>Back to Products</a>
+    <div class="footer">
+        <p>&copy; 2024 Sudhir Aslaliya</p>
+    </div>
 </body>
 
 </html>

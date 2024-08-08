@@ -55,6 +55,7 @@ $categoriesResult = $conn->query("SELECT * FROM categories");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Items</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -99,6 +100,10 @@ $categoriesResult = $conn->query("SELECT * FROM categories");
             </li>
             <?php endwhile; ?>
         </ul>
+        <a href="admin_dashboard.php" class="btn"><i class="fas fa-arrow-left icon"></i>Back</a>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Sudhir Aslaliya</p>
     </div>
 </body>
 

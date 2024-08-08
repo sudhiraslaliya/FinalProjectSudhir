@@ -28,6 +28,9 @@
             <button type="submit" class="btn"><i class="fas fa-check icon"></i>Proceed to Order Summary</button>
         </form>
     </div>
+    <div class="footer">
+        <p>&copy; 2024 Sudhir Aslaliya</p>
+    </div>
 </body>
 
 </html>

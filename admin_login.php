@@ -4,8 +4,8 @@ session_start();
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Hard-coded admin credentials
-    $adminUsername = 'admin';
-    $adminPassword = 'password';
+    $adminUsername = 'sudhir';
+    $adminPassword = '1655';
 
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -43,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit" class="btn"><i class="fas fa-sign-in-alt icon"></i>Login</button>
         </form>
+        <a href="index.php" class="btn"><i class="fas fa-home icon"></i>Main Page</a>
     </div>
 </body>
 

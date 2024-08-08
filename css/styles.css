@@ -104,3 +104,17 @@ input[type="number"] {
     margin-right: 8px;
     color: #ffffff;
 }
+
+
+/* Cart button at top right */
+.cart-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #947be7;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
