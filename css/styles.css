@@ -1,0 +1,106 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #444;
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.categories li {
+    margin: 5px 10px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Product grid */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card h3 {
+    margin: 10px 0;
+}
+
+.product-card p {
+    margin: 10px 0;
+}
+
+.product-card .btn {
+    margin-top: 10px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Input boxes */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+/* Icons */
+.icon {
+    margin-right: 8px;
+    color: #007bff;
+}

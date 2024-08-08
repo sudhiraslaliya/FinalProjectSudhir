@@ -1,58 +1,66 @@
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "yourfurniture";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch categories
+$categoriesResult = $conn->query("SELECT * FROM categories");
+
+if (!$categoriesResult) {
+    die("Query for categories failed: " . $conn->error);
+}
+
+// Fetch products
+$productsResult = $conn->query("SELECT * FROM items");
+
+if (!$productsResult) {
+    die("Query for products failed: " . $conn->error);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Furniture Store</title>
-    <link rel="stylesheet" href="app.css">
+    <title>Online Store</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
-    <header>
-        <h1>Welcome to Your Furniture Store</h1>
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="categories.php">Categories</a></li>
-                <li><a href="view_cart.php">Cart</a></li>
-                <li><a href="checkout.php">Checkout</a></li>
-                <li><a href="admin.php">Admin</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>Our Products</h2>
-        <div id="products">
-            <?php
-            include 'db_connect.php';
-            $sql = "SELECT id, name, description, price, stock_quantity FROM products";
-            $result = $conn->query($sql);
+    <h1>Online Store</h1>
+    <h2>Categories</h2>
+    <ul>
+        <?php while ($category = $categoriesResult->fetch_assoc()): ?>
+        <li><?php echo $category['name']; ?></li>
+        <?php endwhile; ?>
+    </ul>
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<div class='product'>
-                            <img src='path/to/image.jpg' alt='{$row['name']}'>
-                            <h3>{$row['name']}</h3>
-                            <p>{$row['description']}</p>
-                            <p>\${$row['price']}</p>
-                            <p>Stock: {$row['stock_quantity']}</p>
-                            <form action='add_to_cart.php' method='post'>
-                                <input type='hidden' name='product_id' value='{$row['id']}'>
-                                <button type='submit' name='add_to_cart'>Add to Cart</button>
-                            </form>
-                          </div>";
-                }
-            } else {
-                echo "<p>No products available</p>";
-            }
-            $conn->close();
-            ?>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Your Furniture Store. All rights reserved.</p>
-    </footer>
+    <h2>Products</h2>
+    <ul>
+        <?php while ($product = $productsResult->fetch_assoc()): ?>
+        <li>
+            <a href="product_details.php?id=<?php echo $product['id']; ?>"><?php echo $product['name']; ?></a>
+            - $<?php echo $product['price']; ?>
+        </li>
+        <?php endwhile; ?>
+    </ul>
+
+    <a href="cart.php">View Cart</a>
 </body>
 
 </html>
+
+<?php
+$conn->close();
+?>
