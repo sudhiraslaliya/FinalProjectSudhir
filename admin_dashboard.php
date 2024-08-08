@@ -26,6 +26,7 @@ if (!isset($_SESSION['admin'])) {
         <p>Welcome, <?php echo htmlspecialchars($_SESSION['admin']); ?>!</p>
         <a href="manage_items.php" class="btn"><i class="fas fa-box icon"></i>Manage Items</a>
         <a href="manage_categories.php" class="btn"><i class="fas fa-tags icon"></i>Manage Categories</a>
+        <a href="admin_orders.php" class="btn"><i class="fas fa-list icon"></i>Check Order List</a>
         <a href="logout.php" class="btn"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
         <a href="index.php" class="btn"><i class="fas fa-home icon"></i>Main Page</a>
     </div>
