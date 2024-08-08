@@ -1,15 +1,22 @@
 <?php
 session_start();
 
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Hard-coded admin credentials
     $adminUsername = 'admin';
     $adminPassword = 'password';
 
-    if ($_POST['username'] === $adminUsername && $_POST['password'] === $adminPassword) {
-        $_SESSION['admin'] = $adminUsername;
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Validate credentials
+    if ($username === $adminUsername && $password === $adminPassword) {
+        $_SESSION['admin'] = $username;
         header("Location: admin_dashboard.php");
+        exit();
     } else {
-        echo "Invalid credentials.";
+        $error = "Invalid username or password";
     }
 }
 ?>
@@ -21,22 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <h1>Admin Login</h1>
-    <form action="admin_login.php" method="POST">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
+    <a href="cart.php" class="cart-btn"><i class="fas fa-shopping-cart icon"></i>View Cart</a>
+    <div class="container">
+        <h1>Admin Login</h1>
+        <?php if (isset($error)): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
+        <?php endif; ?>
+        <form method="POST" action="admin_login.php">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="btn"><i class="fas fa-sign-in-alt icon"></i>Login</button>
+        </form>
+    </div>
 </body>
 
 </html>
