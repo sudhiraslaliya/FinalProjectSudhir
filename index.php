@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Furniture Store</title>
-    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="app.css">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
         <div id="products">
             <?php
             include 'db_connect.php';
-            $sql = "SELECT * FROM products";
+            $sql = "SELECT id, name, description, price, stock_quantity FROM products";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -36,6 +36,7 @@
                             <h3>{$row['name']}</h3>
                             <p>{$row['description']}</p>
                             <p>\${$row['price']}</p>
+                            <p>Stock: {$row['stock_quantity']}</p>
                             <form action='add_to_cart.php' method='post'>
                                 <input type='hidden' name='product_id' value='{$row['id']}'>
                                 <button type='submit' name='add_to_cart'>Add to Cart</button>
@@ -49,6 +50,9 @@
             ?>
         </div>
     </main>
+    <footer>
+        <p>&copy; 2024 Your Furniture Store. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>

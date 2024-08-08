@@ -1,53 +1,60 @@
 <?php
+session_start();
 include 'db_connect.php';
+
+// Retrieve categories from the database
+$sql = "SELECT id, name FROM categories";
+$result = $conn->query($sql);
+
+$categories = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row;
+    }
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Product Categories</title>
-    <link href="css/app.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" href="app.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="main">
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="mb-3">
-                        <h1 class="h3 d-inline align-middle">Product Categories</h1>
-                    </div>
-                    <div class="row">
-                        <?php
-                        $sql = "SELECT * FROM categories";
-                        $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                echo "<div class='col-md-4'>";
-                                echo "<div class='card'>";
-                                echo "<div class='card-body'>";
-                                echo "<h5 class='card-title'>" . $row["category_name"] . "</h5>";
-                                echo "<a href='categories_products.php?id=" . $row["category_id"] . "' class='btn btn-primary'>View Products</a>";
-                                echo "</div>";
-                                echo "</div>";
-                                echo "</div>";
-                            }
-                        } else {
-                            echo "No categories found.";
-                        }
-
-                        $conn->close();
-                        ?>
-                    </div>
-                </div>
-            </main>
+    <header>
+        <h1>Product Categories</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="categories.php">Categories</a></li>
+                <li><a href="view_cart.php">Cart</a></li>
+                <li><a href="checkout.php">Checkout</a></li>
+                <li><a href="admin.php">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="categories">
+            <?php
+            if (!empty($categories)) {
+                foreach ($categories as $category) {
+                    echo "<div class='category'>
+                            <h3>{$category['name']}</h3>
+                            <a href='categories_products.php?category_id={$category['id']}'>View Products</a>
+                          </div>";
+                }
+            } else {
+                echo "<p>No categories available</p>";
+            }
+            ?>
         </div>
-    </div>
-    <script src="js/app.js"></script>
+    </main>
 </body>
 
 </html>

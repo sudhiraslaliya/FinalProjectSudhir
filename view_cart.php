@@ -59,6 +59,9 @@ if (!empty($_SESSION['cart'])) {
             ?>
         </div>
     </main>
+    <footer>
+        <p>&copy; 2024 Your Furniture Store. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>

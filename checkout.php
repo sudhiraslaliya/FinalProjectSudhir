@@ -1,23 +1,57 @@
 <?php
 session_start();
 
-if (isset($_POST['checkout'])) {
-    // Handle checkout logic
-    session_destroy();
-    header('Location: confirmation.php');
-}
-
 include 'db_connect.php';
-$cart_products = [];
-if (!empty($_SESSION['cart'])) {
-    $ids = implode(',', $_SESSION['cart']);
-    $sql = "SELECT * FROM products WHERE id IN ($ids)";
-    $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $cart_products[] = $row;
+$cart_products = [];
+
+if (isset($_POST['checkout'])) {
+    $name = $_POST['name'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    
+    // Calculate total price
+    if (!empty($_SESSION['cart'])) {
+        $ids = implode(',', $_SESSION['cart']);
+        $sql = "SELECT * FROM products WHERE id IN ($ids)";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $cart_products[] = $row;
+            }
         }
+    }
+
+    $total = 0;
+    foreach ($cart_products as $product) {
+        $total += $product['price'];
+    }
+
+    // Insert order into database
+    $sql = "INSERT INTO orders (name, address, email, total) VALUES ('$name', '$address', '$email', '$total')";
+    if ($conn->query($sql) === TRUE) {
+        $order_id = $conn->insert_id;
+        
+        // Insert order items into database
+        foreach ($cart_products as $product) {
+            $product_id = $product['id'];
+            $product_name = $product['name'];
+            $price = $product['price'];
+            $quantity = 1; // Assuming quantity is always 1 for simplicity
+
+            $sql = "INSERT INTO order_items (order_id, product_id, product_name, price, quantity) VALUES ('$order_id', '$product_id', '$product_name', '$price', '$quantity')";
+            $conn->query($sql);
+        }
+
+        // Store order_id in session
+        $_SESSION['order_id'] = $order_id;
+        
+        // Redirect to confirmation page
+        header('Location: confirmation.php');
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 ?>
