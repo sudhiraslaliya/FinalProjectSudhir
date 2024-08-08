@@ -33,6 +33,34 @@ $ordersResult = $conn->query("SELECT * FROM orders ORDER BY created_at DESC");
     <title>Order List</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #947be7;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f4f4f9;
+    }
+    </style>
 </head>
 
 <body>
