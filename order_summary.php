@@ -2,9 +2,8 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Check if the cart exists in the session and is an array
     if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
-        $_SESSION['cart'] = []; // Initialize the cart if it does not exist
+        $_SESSION['cart'] = [];
     }
 
     $name = $_POST['name'];
@@ -22,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Retrieve products from the session cart
     $productIds = array_keys($_SESSION['cart']);
     $products = [];
     $totalPrice = 0;
@@ -32,11 +30,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $productsResult = $conn->query("SELECT * FROM items WHERE id IN ($ids)");
 
         while ($row = $productsResult->fetch_assoc()) {
-            $row['quantity'] = $_SESSION['cart'][$row['id']];
-            $row['total'] = $row['price'] * $row['quantity'];
-            $products[] = $row;
-            $totalPrice += $row['total'];
+            $quantity = $_SESSION['cart'][$row['id']];
+            $price = $row['price'];
+            $total = $price * $quantity;
+            $products[] = [
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'quantity' => $quantity,
+                'price' => $price,
+                'total' => $total,
+            ];
+            $totalPrice += $total;
         }
+    }
+
+    // Insert the order into the orders table using correct column names
+    $stmt = $conn->prepare("INSERT INTO orders (name, email, address, total) VALUES (?, ?, ?, ?)");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+    $stmt->bind_param("sssd", $name, $email, $address, $totalPrice);
+    $stmt->execute();
+    $orderId = $stmt->insert_id;
+    $stmt->close();
+
+    // Insert the order items into the order_items table
+    foreach ($products as $product) {
+        $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+        if ($stmt === false) {
+            die('Prepare failed: ' . htmlspecialchars($conn->error));
+        }
+        $stmt->bind_param("iiid", $orderId, $product['id'], $product['quantity'], $product['price']);
+        $stmt->execute();
+        $stmt->close();
     }
 
     // Display the order summary
@@ -69,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ";
 
     $conn->close();
-    // Clear the cart after displaying the summary
     unset($_SESSION['cart']);
 } else {
     header("Location: checkout.php");
