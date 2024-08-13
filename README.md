@@ -15,6 +15,43 @@ Backend Setup: Initialized PHP project with sql and connected to phpMyAdmin(XAMP
 
 
 Database Schema Design :
+categories Table: 
+id (int)
+name (text)
+
+products table: 
+id (int)
+name (varchar)
+description (text)
+price (decimal)
+category_id (int)
+created_at (datetime)
+updated_at (datetime)
+
+customers table:
+id (int)
+first_name (varchar)
+last_name (varchar)
+email (varchar)
+phone (varchar)
+address (text)
+created_at (datetime)
+
+orders table: 
+id (int)
+customer_id (int)
+order_date (datetime)
+total_amount (decimal)
+status (varchar)
+created_at (datetime)
+
+order_items table:
+id (int)
+order_id (int)
+product_id (int)
+quantity (int)
+price (decimal)
+created_at (datetime)
 
 
 Frontend Setup
