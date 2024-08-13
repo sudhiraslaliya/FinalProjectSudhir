@@ -1,5 +1,39 @@
-I choose HTML CSS as a FrontEnd, PHP as a Backend, annd MySQL as a  database.
 
-I created 5 tables in databse, Which are product,checkout,cart, order items, categories.
+Student Name: SUDHIR ASLALIYA
+Student Number: 8966602
+Date: 13/08/2024
 
-In detailed view, I writre all table fields in hand written which i attached here.
+Technology Stack
+Frontend: HTML, CSS, JAVASCRIPT
+Backend: PHP with MySQL
+Database: MySQL
+
+Project Setup
+Project Initialization: Repository created on GitHub and cloned to local machine.
+Frontend Setup: Initialized HTML, CSS, Javascript project.
+Backend Setup: Initialized PHP project with sql and connected to phpMyAdmin(XAMPP).
+
+
+Database Schema Design :
+Products Schema (MySQL)
+
+name: String
+description: String
+price: Number
+category: String
+stock: Number
+imageUrl: String
+Users Schema (MongoDB)
+
+username: String
+password: String
+email: String
+
+
+Frontend Setup
+Basic structure set up for HTML , CSS and JavaScript.
+State management planned to handle user sessions and cart data.
+
+Notes : 
+The project is set up using Git and GitHub for version control.
+Further development will include implementing user interfaces for Categories, Item, product, order, and orderitems.
