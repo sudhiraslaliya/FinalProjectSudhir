@@ -15,19 +15,6 @@ Backend Setup: Initialized PHP project with sql and connected to phpMyAdmin(XAMP
 
 
 Database Schema Design :
-Products Schema (MySQL)
-
-name: String
-description: String
-price: Number
-category: String
-stock: Number
-imageUrl: String
-Users Schema (MongoDB)
-
-username: String
-password: String
-email: String
 
 
 Frontend Setup
